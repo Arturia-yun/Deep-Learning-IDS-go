@@ -1,0 +1,56 @@
+# Go IDS 配置文件
+
+# 数据包捕获配置
+capture:
+  interface: "\\Device\\NPF_{9E53C34B-2164-4CEA-B5DE-57A3EC892050}" # Realtek PCIe GbE Family Controller
+  snaplen: 65535       # 抓包长度（字节）
+  promiscuous: false   # 混杂模式
+
+# 网络定义
+networks:
+  home_net: 
+    - "192.168.0.0/16"
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+
+# 流管理配置
+flow:
+  tcp_timeout: 60      # TCP流超时时间（秒）
+  udp_timeout: 30      # UDP流超时时间（秒）
+  max_flows: 100000    # 最大流数限制
+  cleanup_interval: 10 # 流清理间隔（秒）
+
+# 检测配置
+detection:
+  model_path: "config/ids_model.onnx"                 # ONNX模型路径
+  ort_lib_path: "onnxruntime.dll"                     # ONNX Runtime 库路径 (Windows: .dll, Linux: .so)
+  scaler_path: "config/scaler_params.json"         # 标准化参数路径
+  label_map_path: "config/label_map.json"          # 标签映射路径
+  threshold: 0.8                                     # 恶意流量阈值
+  suspicious_threshold: 0.6                         # 可疑流量阈值
+  suspicious_count_limit: 3                          # 可疑累计次数限制
+
+# 响应配置
+response:
+  enable_block: false        # 是否启用自动封禁
+  block_duration: 3600       # 封禁时长（秒），0表示永久封禁
+  whitelist:                 # IP白名单
+    - "127.0.0.1"
+    - "::1"
+
+# 日志配置
+logging:
+  level: "info"              # 日志级别: debug, info, warn, error
+  format: "json"             # 日志格式: json, text
+  output: "both"             # 输出位置: stdout, file, both
+  file_path: "logs/ids.log"  # 日志文件路径（当output为file时）
+  max_size: 100              # 日志文件最大大小（MB）
+  max_backups: 5             # 保留的日志文件数量
+  max_age: 30                # 日志文件保留天数
+
+# 性能配置
+performance:
+  decoder_workers: 4         # 解码goroutine数量
+  feature_workers: 2         # 特征提取goroutine数量
+  packet_queue_size: 10000   # 数据包队列大小
+

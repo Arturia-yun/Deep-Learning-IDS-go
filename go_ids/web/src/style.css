@@ -1,0 +1,63 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+:root {
+  /* Warm Palette (NexaVerse) */
+  --coral-glow: #f38962;
+  --sandy-brown: #f7ac79;
+  --apricot-cream: #fbce8f;
+  --jasmine: #fadd95;
+
+  /* Light Theme Variables */
+  --bg-body: #f4f5f7;
+  --bg-card: #ffffff;
+  --text-primary: #2c3e50;
+  --text-secondary: #7f8c8d;
+  --sidebar-bg: var(--coral-glow);
+
+  --primary-color: var(--coral-glow);
+  --danger-color: #e74c3c;
+  --success-color: #2ecc71;
+
+  --card-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
+  --card-radius: 16px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-body);
+  color: var(--text-primary);
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Redefined as Clean White Card */
+.glass-panel {
+  background: var(--bg-card);
+  border: none;
+  box-shadow: var(--card-shadow);
+  border-radius: var(--card-radius);
+  /* Remove glass effects */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Scrollbar Light */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
